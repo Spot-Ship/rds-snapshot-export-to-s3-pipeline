@@ -116,7 +116,8 @@ def process_automated_snapshot(message, message_id, db_snapshot_type):
     account_id = boto3.client("sts").get_caller_identity()["Account"]
 
     export_task_identifier = (message["Source ID"][4:27] + '-').replace("--", "-") + message_id
-    source_arn = f"arn:aws:rds:{AWS_REGION}:{account_id}:{db_snapshot_type}:{message['Source ID']}"
+    source_arn = (f"arn:aws:rds:{AWS_REGION}:{account_id}:cluster-{db_snapshot_type}"
+                  f":{message['Source ID']}")
 
     start_export_task(export_task_identifier, source_arn) 
 
@@ -125,7 +126,7 @@ def process_manual_snapshot(message, message_id, db_snapshot_type):
     account_id = boto3.client("sts").get_caller_identity()["Account"]
 
     export_task_identifier = (message["Source ID"][:24] + '-').replace("--", "-") + message_id
-    source_arn = f"arn:aws:rds:{AWS_REGION}:{account_id}:{db_snapshot_type}:{message['Source ID']}"
+    source_arn = f"arn:aws:rds:{AWS_REGION}:{account_id}:cluster-{db_snapshot_type}:{message['Source ID']}"
 
     start_export_task(export_task_identifier, source_arn) 
 

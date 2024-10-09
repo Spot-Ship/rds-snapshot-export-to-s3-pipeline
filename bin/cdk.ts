@@ -5,7 +5,7 @@ import { RdsSnapshotExportPipelineStack, RdsEventId, RdsSnapshotType } from '../
 
 const app = new cdk.App();
 new RdsSnapshotExportPipelineStack(app, 'RdsSnapshotExportToS3Pipeline', {
-  dbName: '<existing-rds-database-name>',
+  dbName: 'spotship-dev2-cluster',
   rdsEvents:
     [
       {
@@ -13,5 +13,5 @@ new RdsSnapshotExportPipelineStack(app, 'RdsSnapshotExportToS3Pipeline', {
         rdsSnapshotType: RdsSnapshotType.DB_AUTOMATED_SNAPSHOT
       }
     ],
-  s3BucketName: '<desired-s3-bucket-name>',
+  s3BucketName: 'spot-ship-dev-db-backups',
 });
